@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fact Sheet</title>
+<style>
+:root{--g:#2a78d6;--dk:#1f2328;--bg:#f4f3ee;--card:#fff;--text:#1b1f1c;--muted:#68706b;--line:#dcd9cf;--warn:#b7791f;--soft:#eef4fc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 "Segoe UI",system-ui,sans-serif}
+header{padding:22px 16px 6px;max-width:1200px;margin:auto}
+h1{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:38px;margin:0;letter-spacing:.3px}
+h1 span{color:var(--g)}
+.sub{color:var(--muted);margin-top:4px}
+main{max-width:1200px;margin:auto;padding:8px 16px 120px}
+h2{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:25px;margin:28px 0 6px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.story{font-size:16px}
+.cov{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:10px}
+.cov a{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.cov b{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:17px;display:block}
+.cov .c{font-size:12px;color:var(--muted)}
+.cov .ok{border-left:6px solid var(--g)}.cov .no{border-left:6px solid var(--warn)}
+.theme{margin-top:22px}
+.theme .why{color:var(--muted);margin:-2px 0 8px}
+.fact{display:grid;grid-template-columns:28px 150px 1fr;gap:4px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.fact.off{opacity:.5}
+.fact input[type=checkbox]{width:18px;height:18px;margin-top:3px;accent-color:var(--g)}
+.num{font-family:"Segoe UI",system-ui,sans-serif;font-size:22px;line-height:1.1;word-break:break-word}
+.id{font-size:11px;color:var(--muted)}
+.meaning{font-size:15px}
+.meta{font-size:12.5px;color:var(--muted);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.meta a{color:var(--dk)}
+.pill{display:inline-block;border-radius:999px;padding:0 8px;font-size:11.5px;background:var(--soft);color:var(--dk)}
+.pill.old{background:#fdf3e1;color:var(--warn)}
+.fact textarea{grid-column:3;min-height:34px}
+textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:7px 9px;min-height:60px;background:#fff;color:inherit}
+.lead{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:8px}
+.lead:hover{background:var(--soft)}
+.lead input{margin-top:4px;width:17px;height:17px;accent-color:var(--g)}
+.lead .d{color:var(--muted);font-size:13px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--dk);color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.bar .count{font-weight:600}
+.bar button{font:inherit;background:var(--g);color:#fff;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:600}
+.bar button.ghost{background:#ffffff22}
+@media (max-width:700px){.fact{grid-template-columns:24px 1fr}.fact .num{grid-column:2}.fact .body,.fact textarea{grid-column:1/3}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <div class="sub" id="subline"></div>
+</header>
+<main>
+  <h2>What I think the story is</h2>
+  <div class="box story" id="story"></div>
+
+  <h2>Coverage</h2>
+  <div class="sub">Each theme is something a reader needs. Ticked facts are my default picks; a theme turns amber when nothing in it is ticked.</div>
+  <div class="cov" id="cov"></div>
+
+  <div id="themes"></div>
+
+  <h2>Leads I found but didn't dig into</h2>
+  <div class="sub">Tick any you want researched before we write the story.</div>
+  <div class="box" id="leads"></div>
+
+  <h2>Your ideas</h2>
+  <div class="box">
+    <b>Topics, angles or facts to add</b>
+    <textarea id="add" placeholder="e.g. Add a regional case study; find the newest edition of the market report"></textarea>
+    <b style="display:block;margin-top:10px">Anything to change overall</b>
+    <textarea id="overall" placeholder="e.g. Less on global numbers, more on our market"></textarea>
+  </div>
+
+  <h2 id="picks-h">Your picks (paste this in chat)</h2>
+  <div class="sub">Updates as you tick and type. If the Copy button can't reach the clipboard here, click in the box, press Ctrl+A, then Ctrl+C.</div>
+  <div class="box"><textarea id="picks" readonly style="min-height:160px;font-family:Consolas,monospace;font-size:12.5px"></textarea></div>
+</main>
+<div class="bar"><span class="count" id="count"></span><span id="status" style="padding:3px 10px;border-radius:999px;font-size:13px"></span><button id="copy">Copy my picks</button><button class="ghost" id="reset">Back to my defaults</button></div>
+<script>
+const D=/*DATA*/{"title":"Topic","date":"","fx":"","story":"","themes":[],"facts":[],"leads":[]}/*END*/;
+const KEY='factsheet:'+D.title;
+let S={on:{},note:{},lead:{},add:'',overall:''};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const isOn=f=>f.id in S.on?S.on[f.id]:!!f.pick;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// Picks are saved to disk next to the sheet ("<sheet> picks.json/.txt") through sheet_server.py, plus localStorage as a backup
+const STATUS=()=>document.getElementById('status');
+const setStatus=(t,ok)=>{const el=STATUS();if(el){el.textContent=t;el.style.background=ok?'#2a78d655':'#c0392b'}};
+const canDisk=location.protocol.startsWith('http');
+let timer=null;
+async function toDisk(){
+  if(!canDisk){setStatus('NOT SAVING: open this page from http://localhost:8765 (ask Claude)',false);return}
+  try{const r=await fetch('/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sheet:location.pathname,state:S,summary:summary()})});
+    if(!r.ok)throw new Error(await r.text());setStatus('Saved to disk ✓ '+new Date().toLocaleTimeString(),true)}
+  catch(e){setStatus('NOT SAVED: '+e.message,false)}
+}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}clearTimeout(timer);setStatus('Saving…',true);timer=setTimeout(toDisk,400)};
+const [h,...r]=D.title.split(' ');
+document.getElementById('title').innerHTML=esc(h)+' <span>'+esc(r.join(' '))+'</span> · Fact Sheet';
+document.title=D.title+' Fact Sheet';
+document.getElementById('subline').textContent=[D.date&&('Researched '+D.date),D.fx&&('Currency: '+D.fx),D.facts.length+' facts, '+D.themes.length+' themes'].filter(Boolean).join(' · ');
+document.getElementById('story').innerHTML=esc(D.story)||'<span class="sub">Written after research.</span>';
+function render(){
+  document.getElementById('themes').innerHTML=D.themes.map(t=>{
+    const fs=D.facts.filter(f=>f.theme===t.id);
+    return `<section class="theme" id="th-${esc(t.id)}"><h2>${esc(t.name)}</h2><div class="why">${esc(t.why||'')}</div>`+fs.map(f=>{
+      const fresh=f.fresh||'';const old=/^(✗|old|no)/i.test(fresh);
+      return `<div class="fact${isOn(f)?'':' off'}" data-id="${esc(f.id)}">
+        <input type="checkbox" ${isOn(f)?'checked':''} aria-label="Use ${esc(f.id)}">
+        <div><div class="num">${esc(f.number)}</div><div class="id">${esc(f.id)}${f.pick?' · default':''}</div></div>
+        <div class="body"><div class="meaning">${esc(f.meaning)}</div>
+          <div class="meta"><span>${f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.source)}</a>`:esc(f.source)}</span><span>${esc(f.year)}</span>${fresh?`<span class="pill${old?' old':''}">${esc(fresh)}</span>`:''}${f.data?`<span class="pill">${esc(f.data)}</span>`:''}</div></div>
+        <textarea placeholder="Comment or change for ${esc(f.id)}">${esc(S.note[f.id]||'')}</textarea>
+      </div>`}).join('')+`</section>`}).join('');
+  document.getElementById('cov').innerHTML=D.themes.map(t=>{
+    const fs=D.facts.filter(f=>f.theme===t.id),n=fs.filter(isOn).length;
+    return `<a href="#th-${esc(t.id)}" class="${n?'ok':'no'}"><b>${esc(t.name)}</b><span class="c">${n} of ${fs.length} facts picked</span></a>`}).join('');
+  document.getElementById('leads').innerHTML=D.leads.length?D.leads.map(l=>`<label class="lead"><input type="checkbox" data-lead="${esc(l.id)}" ${S.lead[l.id]?'checked':''}><div><b>${esc(l.id)} · ${esc(l.text)}</b><div class="d">${esc(l.why||'')}</div></div></label>`).join(''):'<span class="sub">None.</span>';
+  const n=D.facts.filter(isOn).length;
+  document.getElementById('count').textContent=n+' of '+D.facts.length+' facts picked';
+}
+function boot(){render();document.getElementById('add').value=S.add||'';document.getElementById('overall').value=S.overall||'';try{refresh()}catch(e){}}
+boot();
+// Load picks saved on disk (survives reloads, other browsers, and the app's preview)
+if(canDisk){const f=decodeURIComponent(location.pathname).replace(/\.html$/,' picks.json');
+  fetch(encodeURI(f).replace(/#/g,'%23'),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(v=>{if(v&&v.on){S=Object.assign({on:{},note:{},lead:{},add:'',overall:''},v);boot();setStatus('Loaded your saved picks ✓',true)}else setStatus('Ready: every change saves to disk',true)}).catch(()=>setStatus('Ready: every change saves to disk',true))}
+else setTimeout(()=>setStatus('NOT SAVING: open this page from http://localhost:8765 (ask Claude)',false),0);
+document.addEventListener('change',e=>{
+  const fact=e.target.closest('.fact');
+  if(fact&&e.target.type==='checkbox'){S.on[fact.dataset.id]=e.target.checked;save();render();return}
+  if(e.target.dataset.lead){S.lead[e.target.dataset.lead]=e.target.checked;save()}
+});
+document.addEventListener('input',e=>{
+  const fact=e.target.closest('.fact');
+  if(fact&&e.target.tagName==='TEXTAREA'){S.note[fact.dataset.id]=e.target.value;save()}
+  if(e.target.id==='add'){S.add=e.target.value;save()}
+  if(e.target.id==='overall'){S.overall=e.target.value;save()}
+});
+function summary(){
+  const on=D.facts.filter(isOn).map(f=>f.id),dropped=D.facts.filter(f=>f.pick&&!isOn(f)).map(f=>f.id),added=D.facts.filter(f=>!f.pick&&isOn(f)).map(f=>f.id);
+  const L=[`Fact Sheet picks · ${D.title}`,`Using (${on.length}): ${on.join(', ')||'none'}`];
+  if(dropped.length)L.push('Dropped from defaults: '+dropped.join(', '));
+  if(added.length)L.push('Added to defaults: '+added.join(', '));
+  const notes=Object.entries(S.note).filter(([,v])=>v.trim());
+  if(notes.length){L.push('Comments:');notes.forEach(([k,v])=>L.push(`- ${k}: ${v.trim()}`))}
+  const leads=D.leads.filter(l=>S.lead[l.id]);
+  if(leads.length)L.push('Research these leads: '+leads.map(l=>l.id+' ('+l.text+')').join('; '));
+  if(S.add.trim())L.push('Add: '+S.add.trim());
+  if(S.overall.trim())L.push('Overall: '+S.overall.trim());
+  return L.join('\n');
+}
+// Keep the visible picks box in sync (works even where the clipboard is blocked, e.g. sandboxed previews)
+const box=document.getElementById('picks');
+const refresh=()=>{box.value=summary()};
+refresh();
+document.addEventListener('change',refresh);document.addEventListener('input',e=>{if(e.target!==box)refresh()});
+box.addEventListener('focus',()=>box.select());
+function legacyCopy(){box.focus();box.select();try{return document.execCommand('copy')}catch(e){return false}}
+document.getElementById('copy').onclick=async()=>{
+  const b=document.getElementById('copy');refresh();
+  let ok=false;
+  try{await navigator.clipboard.writeText(box.value);ok=true}catch(e){ok=legacyCopy()}
+  if(ok){b.textContent='Copied ✓ paste it in chat'}
+  else{box.scrollIntoView({behavior:'smooth',block:'center'});box.focus();box.select();b.textContent='Selected below: press Ctrl+C'}
+  setTimeout(()=>b.textContent='Copy my picks',3000)};
+document.getElementById('reset').onclick=()=>{if(!confirm('Clear your ticks and comments?'))return;S={on:{},note:{},lead:{},add:'',overall:''};save();render();document.getElementById('add').value='';document.getElementById('overall').value='';refresh()};
+</script>
+</body>
+</html>
