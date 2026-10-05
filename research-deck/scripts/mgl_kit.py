@@ -302,7 +302,8 @@ class Deck:
 
     # ---------------------------------------------------------------- native charts
     def column_chart(self, s, x, y, w, h, cats, series, stacked=False, horizontal=False, colors=None,
-                     point_colors=None, fmt='#,##0', labels=True, legend=None, line=None, gap=45):
+                     point_colors=None, fmt='#,##0', labels=True, legend=None, line=None, gap=45,
+                     line_color=None, line_labels=False, label_series=None):
         """Clustered / stacked column or bar chart in the template style: data labels on, no gridlines,
         grey axis line, Aptos 9-10 pt, legend at the bottom when there are several series.
         point_colors = list of hex per category for a single-series highlight (e.g. FY27 red, rest green).
@@ -322,7 +323,14 @@ class Deck:
         if point_colors and len(plot.series) == 1:
             for i, pc in enumerate(point_colors):
                 pt = plot.series[0].points[i]; pt.format.fill.solid(); pt.format.fill.fore_color.rgb = rgb(pc)
-        if labels:
+        if labels and label_series is not None:  # label only some series (e.g. the big segment of a stack)
+            for i, ser in enumerate(plot.series):
+                if i in label_series:
+                    dl = ser.data_labels; dl.show_value = True
+                    dl.number_format = fmt; dl.number_format_is_linked = False
+                    dl.font.size = Pt(9); dl.font.name = FONT; dl.font.color.rgb = rgb(C["white"] if stacked else C["ink"])
+                    dl.position = XL_LABEL_POSITION.CENTER if stacked else XL_LABEL_POSITION.OUTSIDE_END
+        elif labels:
             plot.has_data_labels = True; dl = plot.data_labels
             dl.number_format = fmt; dl.number_format_is_linked = False
             dl.font.size = Pt(9 if stacked else 10); dl.font.name = FONT
@@ -331,7 +339,8 @@ class Deck:
         _style_axes(ch, value_axis=not labels)
         _legend(ch, legend if legend is not None else len(series) > 1)
         if line:
-            _add_line_overlay(gf, cats, line, cols[len(series) % len(cols)] if not colors else C["red"])
+            _add_line_overlay(gf, cats, line, line_color or (cols[len(series) % len(cols)] if not colors else C["red"]),
+                              labels=line_labels, fmt=fmt)
         return gf
 
     def line_chart(self, s, x, y, w, h, cats, series, colors=None, fmt='#,##0', end_labels=True, legend=None):
@@ -418,7 +427,7 @@ def _show_value(dl, fmt):
         e.set("val", "1" if tag == "c:showVal" else "0")
 
 
-def _add_line_overlay(gf, cats, line, color):
+def _add_line_overlay(gf, cats, line, color, labels=False, fmt="General"):
     """Add a line series on the same axes as a bar chart (combo), e.g. demand over stacked supply."""
     from lxml import etree
     ch = gf.chart; plotArea = ch._chartSpace.chart.plotArea
@@ -428,12 +437,17 @@ def _add_line_overlay(gf, cats, line, color):
     n = len(bar.findall(qn("c:ser")))
     pts = "".join(f'<c:pt idx="{i}"><c:v>{v}</c:v></c:pt>' for i, v in enumerate(vals))
     cpts = "".join(f'<c:pt idx="{i}"><c:v>{c}</c:v></c:pt>' for i, c in enumerate(cats))
+    dl = (f'<c:dLbls><c:numFmt formatCode="{fmt.replace(chr(34), "&quot;")}" sourceLinked="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln></c:spPr>'
+          f'<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="1"><a:solidFill><a:srgbClr val="{color}"/></a:solidFill>'
+          f'<a:latin typeface="{FONT}"/></a:defRPr></a:pPr><a:endParaRPr lang="en-US"/></a:p></c:txPr><c:dLblPos val="t"/>'
+          f'<c:showLegendKey val="0"/><c:showVal val="1"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/>'
+          f'<c:showBubbleSize val="0"/></c:dLbls>') if labels else ""
     xml = (f'<c:lineChart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" '
            f'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><c:grouping val="standard"/><c:varyColors val="0"/>'
            f'<c:ser><c:idx val="{n}"/><c:order val="{n}"/><c:tx><c:v>{name}</c:v></c:tx>'
            f'<c:spPr><a:ln w="28575" cap="rnd"><a:solidFill><a:srgbClr val="{color}"/></a:solidFill><a:round/></a:ln></c:spPr>'
            f'<c:marker><c:symbol val="circle"/><c:size val="5"/><c:spPr><a:solidFill><a:srgbClr val="{color}"/></a:solidFill>'
-           f'<a:ln><a:solidFill><a:srgbClr val="{color}"/></a:solidFill></a:ln></c:spPr></c:marker>'
+           f'<a:ln><a:solidFill><a:srgbClr val="{color}"/></a:solidFill></a:ln></c:spPr></c:marker>{dl}'
            f'<c:cat><c:strLit><c:ptCount val="{len(cats)}"/>{cpts}</c:strLit></c:cat>'
            f'<c:val><c:numLit><c:formatCode>General</c:formatCode><c:ptCount val="{len(vals)}"/>{pts}</c:numLit></c:val>'
            f'<c:smooth val="0"/></c:ser><c:marker val="1"/>'
