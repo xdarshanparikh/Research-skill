@@ -1,0 +1,250 @@
+[
+ {
+  "id": "J1",
+  "number": "10 trillion",
+  "file": "01 MOFA Japan-India Summit Aug 2025 summary.pdf"
+ },
+ {
+  "id": "J2",
+  "number": "60 billion",
+  "file": "02 JBIC PFC loan Aug 2025.pdf"
+ },
+ {
+  "id": "J4",
+  "number": "3 billion",
+  "file": "03 ACME-IHI green ammonia Japanese backing.pdf"
+ },
+ {
+  "id": "J6",
+  "number": "9",
+  "file": "05 Suzuki Banas biogas plant Aug 2026.pdf",
+  "context": "biogas plant"
+ },
+ {
+  "id": "P1",
+  "number": "300.50",
+  "file": "06 MNRE 300 GW non-fossil PIB 09-08-2026.pdf"
+ },
+ {
+  "id": "P2",
+  "number": "55.29",
+  "file": "06 MNRE 300 GW non-fossil PIB 09-08-2026.pdf"
+ },
+ {
+  "id": "P3",
+  "number": "164.59",
+  "file": "06 MNRE 300 GW non-fossil PIB 09-08-2026.pdf"
+ },
+ {
+  "id": "P4",
+  "number": "47",
+  "file": "07 India NDC 2035 targets.pdf",
+  "context": "2035"
+ },
+ {
+  "id": "P5",
+  "number": "23,731",
+  "file": "08 PIB GOBARdhan cabinet note Aug 2026.pdf"
+ },
+ {
+  "id": "P6",
+  "number": "2,110",
+  "file": "09 Renewable Watch GOBARdhan launch Sep 2026.pdf"
+ },
+ {
+  "id": "P7",
+  "number": "1,478",
+  "file": "09 Renewable Watch GOBARdhan launch Sep 2026.pdf"
+ },
+ {
+  "id": "P8",
+  "number": "200",
+  "file": "09 Renewable Watch GOBARdhan launch Sep 2026.pdf",
+  "context": "CBG plants"
+ },
+ {
+  "id": "C1",
+  "number": "2025",
+  "file": "10 JCM India-Japan official page.pdf",
+  "context": "August"
+ },
+ {
+  "id": "C2",
+  "number": "8",
+  "file": "11 DD India JCM Rules of Implementation June 2026.pdf",
+  "context": "June"
+ },
+ {
+  "id": "C3",
+  "number": "32",
+  "file": "12 CarbonCredits JCM India Article 6.pdf",
+  "context": "partner"
+ },
+ {
+  "id": "C4",
+  "number": "290",
+  "file": "12 CarbonCredits JCM India Article 6.pdf"
+ },
+ {
+  "id": "C5",
+  "number": "100 million",
+  "file": "12 CarbonCredits JCM India Article 6.pdf"
+ },
+ {
+  "id": "C6",
+  "number": "200 million",
+  "file": "12 CarbonCredits JCM India Article 6.pdf"
+ },
+ {
+  "id": "C7",
+  "number": "28",
+  "file": "13 MOE Japan India Forum Sep 2026.pdf",
+  "context": "September"
+ },
+ {
+  "id": "C8",
+  "number": "490",
+  "file": "15 ICAP CCTS compliance seven sectors.pdf"
+ },
+ {
+  "id": "M1",
+  "number": "3,300",
+  "file": "18 Carbon Mapper Mumbai waste sites.pdf"
+ },
+ {
+  "id": "M2",
+  "number": "5,000",
+  "file": "18 Carbon Mapper Mumbai waste sites.pdf",
+  "context": "CH4"
+ },
+ {
+  "id": "M3",
+  "number": "350",
+  "file": "19 iamrenew MGL 350 TPD CBG Mankhurd.pdf",
+  "context": "tonnes"
+ },
+ {
+  "id": "M4",
+  "number": "1,000",
+  "file": "20 Bioenergy Times MGL Deonar land.pdf",
+  "context": "wet waste"
+ },
+ {
+  "id": "M5",
+  "number": "18",
+  "file": "20 Bioenergy Times MGL Deonar land.pdf",
+  "context": "compressed biogas"
+ },
+ {
+  "id": "E1",
+  "number": "56 100",
+  "file": "23 IPCC 2006 Vol2 Ch1 emission factors.pdf"
+ },
+ {
+  "id": "E2",
+  "number": "48.0",
+  "file": "23 IPCC 2006 Vol2 Ch1 emission factors.pdf",
+  "context": "Natural Gas"
+ },
+ {
+  "id": "E3",
+  "number": "53.06",
+  "file": "27 US EPA GHG Emission Factors Hub 2025.pdf"
+ },
+ {
+  "id": "E4",
+  "number": "28",
+  "file": "26 GHG Protocol GWP values.pdf",
+  "context": "Methane"
+ },
+ {
+  "id": "E5",
+  "number": "0.05444",
+  "file": "27 US EPA GHG Emission Factors Hub 2025.pdf"
+ },
+ {
+  "id": "L1",
+  "number": "1084",
+  "file": "28 PMC India MSW methane study.pdf"
+ },
+ {
+  "id": "J3",
+  "number": "228,000",
+  "file": "03 ACME-IHI green ammonia Japanese backing.pdf"
+ },
+ {
+  "id": "M6",
+  "number": "6,500",
+  "file": "21 iamrenew Upcoming bio-CNG plant BMC MGL.pdf"
+ },
+ {
+  "id": "M7",
+  "number": "3,500",
+  "file": "21 iamrenew Upcoming bio-CNG plant BMC MGL.pdf",
+  "context": "wet waste"
+ },
+ {
+  "id": "M8",
+  "number": "10%",
+  "file": "31 iamrenew Deonar WTE delayed mid-2026.pdf",
+  "context": "Deonar"
+ },
+ {
+  "id": "M9",
+  "number": "600",
+  "file": "20 Bioenergy Times MGL Deonar land.pdf",
+  "context": "crore"
+ },
+ {
+  "id": "G1",
+  "number": "56.67",
+  "file": "22 Indian Chemical News MGL Q1 FY27.pdf"
+ },
+ {
+  "id": "G2",
+  "number": "318.09",
+  "file": "22 Indian Chemical News MGL Q1 FY27.pdf"
+ },
+ {
+  "id": "G3",
+  "number": "4.766",
+  "file": "22 Indian Chemical News MGL Q1 FY27.pdf"
+ },
+ {
+  "id": "P9",
+  "number": "20 million",
+  "file": "09 Renewable Watch GOBARdhan launch Sep 2026.pdf",
+  "context": "tonne per day"
+ },
+ {
+  "id": "B1",
+  "number": "550",
+  "file": "32 Energetica EverEnviro Indore CBG benchmark.pdf"
+ },
+ {
+  "id": "B2",
+  "number": "70,000",
+  "file": "32 Energetica EverEnviro Indore CBG benchmark.pdf"
+ },
+ {
+  "id": "P10",
+  "number": "5 per cent",
+  "file": "09 Renewable Watch GOBARdhan launch Sep 2026.pdf",
+  "context": "2028"
+ },
+ {
+  "id": "C9",
+  "number": "seven",
+  "file": "15 ICAP CCTS compliance seven sectors.pdf"
+ },
+ {
+  "id": "C10",
+  "number": "October 2026",
+  "file": "16 Outlook Business CCTS trading Oct 2026.pdf"
+ },
+ {
+  "id": "C11",
+  "number": "half",
+  "file": "14 MOE Japan JCM Model Projects subsidy.pdf"
+ }
+]

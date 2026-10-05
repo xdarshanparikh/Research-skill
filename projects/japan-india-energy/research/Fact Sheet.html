@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fact Sheet</title>
+<style>
+:root{--g:#2a78d6;--dk:#1f2328;--bg:#f4f3ee;--card:#fff;--text:#1b1f1c;--muted:#68706b;--line:#dcd9cf;--warn:#b7791f;--soft:#eef4fc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 "Segoe UI",system-ui,sans-serif}
+header{padding:22px 16px 6px;max-width:1200px;margin:auto}
+h1{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:38px;margin:0;letter-spacing:.3px}
+h1 span{color:var(--g)}
+.sub{color:var(--muted);margin-top:4px}
+main{max-width:1200px;margin:auto;padding:8px 16px 120px}
+h2{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:25px;margin:28px 0 6px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.story{font-size:16px}
+.cov{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:10px}
+.cov a{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.cov b{font-family:"Segoe UI",system-ui,sans-serif;font-weight:normal;font-size:17px;display:block}
+.cov .c{font-size:12px;color:var(--muted)}
+.cov .ok{border-left:6px solid var(--g)}.cov .no{border-left:6px solid var(--warn)}
+.theme{margin-top:22px}
+.theme .why{color:var(--muted);margin:-2px 0 8px}
+.fact{display:grid;grid-template-columns:28px 150px 1fr;gap:4px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.fact.off{opacity:.5}
+.fact input[type=checkbox]{width:18px;height:18px;margin-top:3px;accent-color:var(--g)}
+.num{font-family:"Segoe UI",system-ui,sans-serif;font-size:22px;line-height:1.1;word-break:break-word}
+.id{font-size:11px;color:var(--muted)}
+.meaning{font-size:15px}
+.meta{font-size:12.5px;color:var(--muted);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.meta a{color:var(--dk)}
+.pill{display:inline-block;border-radius:999px;padding:0 8px;font-size:11.5px;background:var(--soft);color:var(--dk)}
+.pill.old{background:#fdf3e1;color:var(--warn)}
+.fact textarea{grid-column:3;min-height:34px}
+textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:7px 9px;min-height:60px;background:#fff;color:inherit}
+.lead{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:8px}
+.lead:hover{background:var(--soft)}
+.lead input{margin-top:4px;width:17px;height:17px;accent-color:var(--g)}
+.lead .d{color:var(--muted);font-size:13px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--dk);color:#fff;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;z-index:5}
+.bar .count{font-weight:600}
+.bar button{font:inherit;background:var(--g);color:#fff;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:600}
+.bar button.ghost{background:#ffffff22}
+@media (max-width:700px){.fact{grid-template-columns:24px 1fr}.fact .num{grid-column:2}.fact .body,.fact textarea{grid-column:1/3}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <div class="sub" id="subline"></div>
+</header>
+<main>
+  <h2>What I think the story is</h2>
+  <div class="box story" id="story"></div>
+
+  <h2>Coverage</h2>
+  <div class="sub">Each theme is something a reader needs. Ticked facts are my default picks; a theme turns amber when nothing in it is ticked.</div>
+  <div class="cov" id="cov"></div>
+
+  <div id="themes"></div>
+
+  <h2>Leads I found but didn't dig into</h2>
+  <div class="sub">Tick any you want researched before we write the story.</div>
+  <div class="box" id="leads"></div>
+
+  <h2>Your ideas</h2>
+  <div class="box">
+    <b>Topics, angles or facts to add</b>
+    <textarea id="add" placeholder="e.g. Add a regional case study; find the newest edition of the market report"></textarea>
+    <b style="display:block;margin-top:10px">Anything to change overall</b>
+    <textarea id="overall" placeholder="e.g. Less on global numbers, more on our market"></textarea>
+  </div>
+
+  <h2 id="picks-h">Your picks (paste this in chat)</h2>
+  <div class="sub">Updates as you tick and type. If the Copy button can't reach the clipboard here, click in the box, press Ctrl+A, then Ctrl+C.</div>
+  <div class="box"><textarea id="picks" readonly style="min-height:160px;font-family:Consolas,monospace;font-size:12.5px"></textarea></div>
+</main>
+<div class="bar"><span class="count" id="count"></span><span id="status" style="padding:3px 10px;border-radius:999px;font-size:13px"></span><button id="copy">Copy my picks</button><button class="ghost" id="reset">Back to my defaults</button></div>
+<script>
+const D=/*DATA*/{"title": "Japan–India Energy & Carbon", "date": "5 Oct 2026", "fx": "", "story": "Japan has set a ¥10 trillion India investment target and a live carbon-credit channel (the JCM, rules adopted June 2026). India now pays a fixed ₹2,110/MMBtu for CBG and mandates 3–5% blending. Diverting Mumbai's wet waste from Kanjurmarg into CBG saves roughly 0.4–1.5 t CO₂e per tonne, a fit for JCM co-finance and credits.", "themes": [{"id": "japan", "name": "Japan's push into Indian energy", "why": "Who is already investing, and how much"}, {"id": "policy", "name": "India's targets, policy and subsidies", "why": "The rules and money that make projects bankable"}, {"id": "carbon", "name": "Carbon markets: CCTS and the JCM", "why": "How a tonne saved becomes a credit, and who buys it"}, {"id": "landfill", "name": "Mumbai landfill: carbon per tonne", "why": "The size of the saving from diverting waste"}, {"id": "png", "name": "Blending CBG into PNG", "why": "What the blending mandate saves for a city gas company"}], "facts": [{"id": "F1", "theme": "japan", "number": "¥10 trillion", "meaning": "Japan's new 10-year target for private investment into India, set at the Aug 2025 summit (the previous ¥5 trillion target was met)", "source": "MOFA Japan-India Summit Aug 2025 summary", "url": "https://japan.kantei.go.jp/103/diplomatic/202508/29india.html", "year": "Aug 2025", "fresh": "✓ latest summit target", "data": "", "pick": true}, {"id": "F2", "theme": "japan", "number": "¥60 billion", "meaning": "JBIC-led loan to Power Finance Corporation for renewable and next-generation energy projects (JBIC share ¥36 bn)", "source": "JBIC PFC loan Aug 2025", "url": "https://www.jbic.go.jp/en/information/press/press-2025/press_00071.html", "year": "Aug 2025", "fresh": "✓", "data": "", "pick": true}, {"id": "F3", "theme": "japan", "number": "228,000 t/yr", "meaning": "Green ammonia from ACME-IHI in Odisha that Japan's Contract-for-Difference scheme backs, exports from Sep 2030", "source": "ACME-IHI green ammonia Japanese backing", "url": "https://www.indianchemicalnews.com/ammonia/acme-ihi-secures-3-billion-japanese-subsidy-for-green-ammonia-in-india-30960", "year": "2026", "fresh": "✓", "data": "", "pick": true}, {"id": "F4", "theme": "japan", "number": "9 plants", "meaning": "Suzuki's agreed dung-to-CBG plants with NDDB and Banas Dairy in Gujarat; third opened 26 Aug 2026", "source": "Suzuki Banas biogas plant Aug 2026", "url": "https://www.globalsuzuki.com/globalnews/2026/0826.html", "year": "Aug 2026", "fresh": "✓ newest opening", "data": "timeline: Dec 2025, Jan 2026, Aug 2026", "pick": true}, {"id": "F5", "theme": "japan", "number": "First Japanese CGD entrant", "meaning": "Osaka Gas, Sumitomo and JOIN invest in AG&P's city gas business in India", "source": "Osaka Gas Sumitomo AG&P India CGD", "url": "https://offshoresource.com/business-wire/osaka-gas-sumitomo-and-join-to-invest-in-expanding-city-gas-distribution-business-in-india/", "year": "Apr 2024", "fresh": "✗ check for 2026 update", "data": "", "pick": false}, {"id": "F7", "theme": "policy", "number": "300.5 GW", "meaning": "India's non-fossil power capacity on 31 Jul 2026: over 60% of the 500 GW target for 2030", "source": "MNRE 300 GW non-fossil PIB 09-08-2026", "url": "https://neetiniyaman.com/wp-content/uploads/2026/09/1.-PIB-Press-Release-09.08.2026-300-GW-Achieved.pdf", "year": "Jul 2026", "fresh": "✓ latest MNRE release", "data": "solar 164.59, wind 58.14, hydro 57.24, bio 11.75, nuclear 8.78 GW", "pick": true}, {"id": "F8", "theme": "policy", "number": "55.29 GW", "meaning": "Record non-fossil capacity added in 2025-26 (44.6 GW solar, 6 GW wind)", "source": "MNRE 300 GW non-fossil PIB 09-08-2026", "url": "https://neetiniyaman.com/wp-content/uploads/2026/09/1.-PIB-Press-Release-09.08.2026-300-GW-Achieved.pdf", "year": "FY26", "fresh": "✓", "data": "", "pick": false}, {"id": "F9", "theme": "policy", "number": "47% by 2035", "meaning": "India's updated NDC: cut emissions intensity of GDP 47% below 2005; 60% non-fossil capacity; net zero 2070", "source": "India NDC 2035 targets", "url": "https://climatefactchecks.org/india-sets-2035-climate-targets-eyes-60-clean-energy-capacity/", "year": "Mar 2026", "fresh": "✓", "data": "", "pick": true}, {"id": "F10", "theme": "policy", "number": "₹23,731 crore", "meaning": "GOBARdhan scheme for compressed biogas, FY27–FY36, approved 6 Aug 2026; aims ~10x CBG output", "source": "PIB GOBARdhan cabinet note Aug 2026", "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc202686946301.pdf", "year": "Aug 2026", "fresh": "✓", "data": "outlay by component available", "pick": true}, {"id": "F11", "theme": "policy", "number": "₹2,110/MMBtu", "meaning": "Administered CBG price, fixed for at least 10 years (was ₹1,478)", "source": "Renewable Watch GOBARdhan launch Sep 2026", "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/", "year": "Sep 2026", "fresh": "✓", "data": "before/after", "pick": true}, {"id": "F12", "theme": "policy", "number": "3% → 4% → 5%", "meaning": "Mandatory CBG share of city-gas CNG and domestic PNG: FY27, FY28, FY29 onward", "source": "Renewable Watch GOBARdhan launch Sep 2026", "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/", "year": "Sep 2026", "fresh": "✓ replaces the 2023 1%→5% path", "data": "series FY27-FY29", "pick": true}, {"id": "F13", "theme": "policy", "number": "₹2 crore per TPD", "meaning": "Capital assistance per tonne-per-day of CBG output capacity for greenfield plants", "source": "Renewable Watch GOBARdhan launch Sep 2026", "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/", "year": "Sep 2026", "fresh": "✓", "data": "", "pick": false}, {"id": "F14", "theme": "policy", "number": "200+ plants", "meaning": "CBG plants commissioned in India so far", "source": "Renewable Watch GOBARdhan launch Sep 2026", "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/", "year": "Sep 2026", "fresh": "✓", "data": "", "pick": false}, {"id": "F15", "theme": "carbon", "number": "490 entities", "meaning": "Industrial units with binding emission-intensity targets under India's carbon market (CCTS) in 7 sectors, from FY2025-26", "source": "ICAP CCTS compliance seven sectors", "url": "https://icapcarbonaction.com/en/news/compliance-obligations-under-indias-carbon-credit-trading-scheme-enter-force-seven-sectors", "year": "Mar 2026", "fresh": "✓", "data": "sectors list", "pick": true}, {"id": "F16", "theme": "carbon", "number": "Oct 2026", "meaning": "First trading of India's Carbon Credit Certificates expected", "source": "Outlook Business CCTS trading Oct 2026", "url": "https://www.outlookbusiness.com/amp/story/news/india-to-launch-first-carbon-trading-programme-by-october-2026", "year": "2026", "fresh": "✓ check after launch", "data": true, "pick": false}, {"id": "F17", "theme": "carbon", "number": "BM WA03.001", "meaning": "CCTS offset methodology for landfill methane recovery, published 27 Mar 2025; CBG plants also have an approved method", "source": "BEE BM WA03.001 landfill methane methodology", "url": "https://beeindia.gov.in/sites/default/files/BM%20WA03.001.pdf", "year": "Mar 2025", "fresh": "✓ v1.0", "data": "", "pick": true}, {"id": "F18", "theme": "carbon", "number": "7 Aug 2025", "meaning": "India and Japan signed the Joint Crediting Mechanism (JCM) under Paris Article 6.2", "source": "JCM India-Japan official page", "url": "https://www.jcm.go.jp/jc/in-about/", "year": "Aug 2025", "fresh": "✓", "data": "", "pick": true}, {"id": "F19", "theme": "carbon", "number": "8 Jun 2026", "meaning": "JCM Rules of Implementation adopted: Joint Committee, approval, third-party verification, registries", "source": "DD India JCM Rules of Implementation June 2026", "url": "https://ddindia.co.in/2026/06/india-japan-adopt-implementation-rules-for-joint-crediting-mechanism-under-paris-agreement/", "year": "Jun 2026", "fresh": "✓", "data": "", "pick": true}, {"id": "F20", "theme": "carbon", "number": "Up to 1/2", "meaning": "Share of a project's initial investment Japan's MOE subsidy can cover; Japan takes a share of credits", "source": "MOE Japan JCM Model Projects subsidy", "url": "https://www.env.go.jp/en/press/press_02376.html", "year": "Jul 2026", "fresh": "✓", "data": "", "pick": true}, {"id": "F21", "theme": "carbon", "number": "32 partners, 300+ projects", "meaning": "JCM reach; India is a partner. Japan aims for ~100 Mt of credits by FY2030 and ~200 Mt by FY2040", "source": "CarbonCredits JCM India Article 6", "url": "https://carboncredits.com/japan-india-jcm-article-6-carbon-credits/", "year": "Apr–Jul 2026", "fresh": "✓", "data": "", "pick": false}, {"id": "F22", "theme": "carbon", "number": "28 Sep 2026", "meaning": "India–Japan carbon market forum in Delhi; compressed biogas named a JCM focus area", "source": "MOE Japan India Forum Sep 2026", "url": "https://www.env.go.jp/en/press/press_02632.html", "year": "Sep 2026", "fresh": "✓ outcomes not yet published", "data": false, "pick": false}, {"id": "F23", "theme": "landfill", "number": "3,300 kg CH₄/hr", "meaning": "Methane measured from Kanjurmarg landfill by satellite (3 Apr 2026); one of the world's largest waste-site plumes", "source": "Carbon Mapper Mumbai waste sites", "url": "https://carbonmapper.org/articles/mumbai-waste-sites", "year": "Apr 2026", "fresh": "✓", "data": "2025: 1,736 kg/h; 2026: 3,300 kg/h", "pick": true}, {"id": "F24", "theme": "landfill", "number": "~0.81 Mt CO₂e/yr", "meaning": "Kanjurmarg's methane as CO₂e if the Apr 2026 rate held all year (derived: × 8,760 h × GWP 28)", "source": "Carbon Mapper Mumbai waste sites", "url": "https://carbonmapper.org/articles/mumbai-waste-sites", "year": "2026", "fresh": "derived", "data": "", "pick": true}, {"id": "F25", "theme": "landfill", "number": "~0.38 t CO₂e per tonne", "meaning": "Methane now leaking per tonne of Mumbai waste landfilled at Kanjurmarg (derived, indicative from one overpass)", "source": "Carbon Mapper Mumbai waste sites", "url": "https://carbonmapper.org/articles/mumbai-waste-sites", "year": "2026", "fresh": "derived", "data": "", "pick": true}, {"id": "F26", "theme": "landfill", "number": "1.1–1.4 t CO₂e per tonne", "meaning": "Lifetime methane potential of a tonne of wet food waste in a landfill, IPCC default method (derived)", "source": "IPCC 2006 Vol5 Ch3 solid waste disposal", "url": "https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/5_Volume5/V5_3_Ch3_SWDS.pdf", "year": "IPCC 2006", "fresh": "✓ standard defaults", "data": "DOC 0.15, DOCf 0.5, F 0.5, MCF 0.8–1.0, GWP 28", "pick": true}, {"id": "F27", "theme": "landfill", "number": "0.35 t CO₂e per tonne", "meaning": "Real benchmark: Indore's 550 t/day waste-to-CBG plant claims ~70,000 t CO₂e/yr saved", "source": "Energetica EverEnviro Indore CBG benchmark", "url": "https://www.energetica-india.net/news/everenviro-sets-indias-benchmark-with-first-large-scale-cbg-plant-from-municipal-solid-waste-in-indore", "year": "2025", "fresh": "✓", "data": "", "pick": true}, {"id": "F28", "theme": "landfill", "number": "6,500 t/day", "meaning": "Waste Mumbai generates; ~3,500 t is wet waste; ~90% goes to Kanjurmarg", "source": "iamrenew Upcoming bio-CNG plant BMC MGL", "url": "https://www.iamrenew.com/green-energy/upcoming-bio-cng-plant-by-bmc-mgl-to-process-1-3rd-of-mumbais-bio-waste/", "year": "2025", "fresh": "✗ BMC 2026 figure not found", "data": "", "pick": false}, {"id": "F29", "theme": "landfill", "number": "350 + 1,000 TPD", "meaning": "MGL's two Mumbai CBG projects: Mankhurd 350 TPD (concession June 2026) and Deonar 1,000 TPD (36 t CBG/day)", "source": "iamrenew MGL 350 TPD CBG Mankhurd", "url": "https://www.iamrenew.com/green-energy/mgl-to-develop-350-tpd-compressed-biogas-cbg-plant-in-mumbai/", "year": "2026", "fresh": "✓", "data": "", "pick": true}, {"id": "F30", "theme": "landfill", "number": "61–191 kt CO₂e/yr", "meaning": "Derived savings range for MGL's 350 TPD plant (observed vs IPCC per-tonne, plus fuel displaced)", "source": "iamrenew MGL 350 TPD CBG Mankhurd", "url": "https://www.iamrenew.com/green-energy/mgl-to-develop-350-tpd-compressed-biogas-cbg-plant-in-mumbai/", "year": "2026", "fresh": "derived", "data": "", "pick": false}, {"id": "F31", "theme": "png", "number": "1.92 kg CO₂ per SCM", "meaning": "CO₂ from burning one standard cubic metre of natural gas; CBG is biogenic, so each SCM swapped saves this (derived from EPA)", "source": "US EPA GHG Emission Factors Hub 2025", "url": "https://www.epa.gov/system/files/documents/2025-01/ghg-emission-factors-hub-2025.pdf", "year": "2025", "fresh": "✓", "data": "", "pick": true}, {"id": "F32", "theme": "png", "number": "0.623 MMSCMD", "meaning": "MGL domestic PNG sales in Q1 FY27 (56.67 million SCM in 91 days); CNG 3.50 MMSCMD", "source": "Indian Chemical News MGL Q1 FY27", "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336", "year": "Q1 FY27", "fresh": "✓ latest quarter", "data": "", "pick": true}, {"id": "F33", "theme": "png", "number": "~4,370 t CO₂/yr per 1%", "meaning": "CO₂ saved for each 1% of CBG blended into MGL's domestic PNG (derived)", "source": "Indian Chemical News MGL Q1 FY27", "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336", "year": "FY27", "fresh": "derived", "data": "", "pick": true}, {"id": "F34", "theme": "png", "number": "13 → 22 kt CO₂/yr", "meaning": "Saving from blending CBG into MGL domestic PNG at 3% (FY27) and 5% (FY29+); 87 → 144 kt on CNG + PNG (derived)", "source": "Indian Chemical News MGL Q1 FY27", "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336", "year": "FY27–FY29", "fresh": "derived", "data": "series 3/4/5%", "pick": true}, {"id": "F35", "theme": "png", "number": "~206,000 SCM/day", "meaning": "CBG MGL would need at 5% of CNG + domestic PNG volumes (derived)", "source": "Indian Chemical News MGL Q1 FY27", "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336", "year": "FY29", "fresh": "derived", "data": "", "pick": false}], "leads": [{"id": "L1", "text": "\"Nepon India Alliance\": no public record found under this name", "why": "Need the exact company name, website or partner list to profile it (NEPON Inc. in Atsugi, Japan, is a machinery maker; is that the one?)"}, {"id": "L2", "text": "JCM methodology for CBG / landfill methane in India", "why": "Credit volume depends on the approved JCM methodology and the Japan–India credit split"}, {"id": "L3", "text": "Carbon credit prices: CCC first trades, JCM credit prices", "why": "Turns the tonnes into rupees; prices not yet published"}, {"id": "L4", "text": "Additionality at Kanjurmarg", "why": "If the landfill already captures gas, credits for diverted waste may be lower"}, {"id": "L5", "text": "Osaka Gas / Tokyo Gas / Sumitomo 2026 moves in Indian city gas and CBG", "why": "Direct Japanese peers for an MGL partnership"}, {"id": "L6", "text": "India's 5 MMT green hydrogen target status and Japanese offtakes", "why": "Second Japan–India energy theme beyond biogas"}, {"id": "L7", "text": "MNRE–METI clean hydrogen and ammonia Joint Declaration (29 Aug 2025)", "why": "Official PDF couldn't be read here; confirm the text before using"}]}/*END*/;
+const KEY='factsheet:'+D.title;
+let S={on:{},note:{},lead:{},add:'',overall:''};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v)S=Object.assign(S,v)}catch(e){}
+const isOn=f=>f.id in S.on?S.on[f.id]:!!f.pick;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// Picks are saved to disk next to the sheet ("<sheet> picks.json/.txt") through sheet_server.py, plus localStorage as a backup
+const STATUS=()=>document.getElementById('status');
+const setStatus=(t,ok)=>{const el=STATUS();if(el){el.textContent=t;el.style.background=ok?'#2a78d655':'#c0392b'}};
+const canDisk=location.protocol.startsWith('http');
+let timer=null;
+async function toDisk(){
+  if(!canDisk){setStatus('NOT SAVING: open this page from http://localhost:8765 (ask Claude)',false);return}
+  try{const r=await fetch('/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sheet:location.pathname,state:S,summary:summary()})});
+    if(!r.ok)throw new Error(await r.text());setStatus('Saved to disk ✓ '+new Date().toLocaleTimeString(),true)}
+  catch(e){setStatus('NOT SAVED: '+e.message,false)}
+}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}clearTimeout(timer);setStatus('Saving…',true);timer=setTimeout(toDisk,400)};
+const [h,...r]=D.title.split(' ');
+document.getElementById('title').innerHTML=esc(h)+' <span>'+esc(r.join(' '))+'</span> · Fact Sheet';
+document.title=D.title+' Fact Sheet';
+document.getElementById('subline').textContent=[D.date&&('Researched '+D.date),D.fx&&('Currency: '+D.fx),D.facts.length+' facts, '+D.themes.length+' themes'].filter(Boolean).join(' · ');
+document.getElementById('story').innerHTML=esc(D.story)||'<span class="sub">Written after research.</span>';
+function render(){
+  document.getElementById('themes').innerHTML=D.themes.map(t=>{
+    const fs=D.facts.filter(f=>f.theme===t.id);
+    return `<section class="theme" id="th-${esc(t.id)}"><h2>${esc(t.name)}</h2><div class="why">${esc(t.why||'')}</div>`+fs.map(f=>{
+      const fresh=f.fresh||'';const old=/^(✗|old|no)/i.test(fresh);
+      return `<div class="fact${isOn(f)?'':' off'}" data-id="${esc(f.id)}">
+        <input type="checkbox" ${isOn(f)?'checked':''} aria-label="Use ${esc(f.id)}">
+        <div><div class="num">${esc(f.number)}</div><div class="id">${esc(f.id)}${f.pick?' · default':''}</div></div>
+        <div class="body"><div class="meaning">${esc(f.meaning)}</div>
+          <div class="meta"><span>${f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.source)}</a>`:esc(f.source)}</span><span>${esc(f.year)}</span>${fresh?`<span class="pill${old?' old':''}">${esc(fresh)}</span>`:''}${f.data?`<span class="pill">${esc(f.data)}</span>`:''}</div></div>
+        <textarea placeholder="Comment or change for ${esc(f.id)}">${esc(S.note[f.id]||'')}</textarea>
+      </div>`}).join('')+`</section>`}).join('');
+  document.getElementById('cov').innerHTML=D.themes.map(t=>{
+    const fs=D.facts.filter(f=>f.theme===t.id),n=fs.filter(isOn).length;
+    return `<a href="#th-${esc(t.id)}" class="${n?'ok':'no'}"><b>${esc(t.name)}</b><span class="c">${n} of ${fs.length} facts picked</span></a>`}).join('');
+  document.getElementById('leads').innerHTML=D.leads.length?D.leads.map(l=>`<label class="lead"><input type="checkbox" data-lead="${esc(l.id)}" ${S.lead[l.id]?'checked':''}><div><b>${esc(l.id)} · ${esc(l.text)}</b><div class="d">${esc(l.why||'')}</div></div></label>`).join(''):'<span class="sub">None.</span>';
+  const n=D.facts.filter(isOn).length;
+  document.getElementById('count').textContent=n+' of '+D.facts.length+' facts picked';
+}
+function boot(){render();document.getElementById('add').value=S.add||'';document.getElementById('overall').value=S.overall||'';try{refresh()}catch(e){}}
+boot();
+// Load picks saved on disk (survives reloads, other browsers, and the app's preview)
+if(canDisk){const f=decodeURIComponent(location.pathname).replace(/\.html$/,' picks.json');
+  fetch(encodeURI(f).replace(/#/g,'%23'),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(v=>{if(v&&v.on){S=Object.assign({on:{},note:{},lead:{},add:'',overall:''},v);boot();setStatus('Loaded your saved picks ✓',true)}else setStatus('Ready: every change saves to disk',true)}).catch(()=>setStatus('Ready: every change saves to disk',true))}
+else setTimeout(()=>setStatus('NOT SAVING: open this page from http://localhost:8765 (ask Claude)',false),0);
+document.addEventListener('change',e=>{
+  const fact=e.target.closest('.fact');
+  if(fact&&e.target.type==='checkbox'){S.on[fact.dataset.id]=e.target.checked;save();render();return}
+  if(e.target.dataset.lead){S.lead[e.target.dataset.lead]=e.target.checked;save()}
+});
+document.addEventListener('input',e=>{
+  const fact=e.target.closest('.fact');
+  if(fact&&e.target.tagName==='TEXTAREA'){S.note[fact.dataset.id]=e.target.value;save()}
+  if(e.target.id==='add'){S.add=e.target.value;save()}
+  if(e.target.id==='overall'){S.overall=e.target.value;save()}
+});
+function summary(){
+  const on=D.facts.filter(isOn).map(f=>f.id),dropped=D.facts.filter(f=>f.pick&&!isOn(f)).map(f=>f.id),added=D.facts.filter(f=>!f.pick&&isOn(f)).map(f=>f.id);
+  const L=[`Fact Sheet picks · ${D.title}`,`Using (${on.length}): ${on.join(', ')||'none'}`];
+  if(dropped.length)L.push('Dropped from defaults: '+dropped.join(', '));
+  if(added.length)L.push('Added to defaults: '+added.join(', '));
+  const notes=Object.entries(S.note).filter(([,v])=>v.trim());
+  if(notes.length){L.push('Comments:');notes.forEach(([k,v])=>L.push(`- ${k}: ${v.trim()}`))}
+  const leads=D.leads.filter(l=>S.lead[l.id]);
+  if(leads.length)L.push('Research these leads: '+leads.map(l=>l.id+' ('+l.text+')').join('; '));
+  if(S.add.trim())L.push('Add: '+S.add.trim());
+  if(S.overall.trim())L.push('Overall: '+S.overall.trim());
+  return L.join('\n');
+}
+// Keep the visible picks box in sync (works even where the clipboard is blocked, e.g. sandboxed previews)
+const box=document.getElementById('picks');
+const refresh=()=>{box.value=summary()};
+refresh();
+document.addEventListener('change',refresh);document.addEventListener('input',e=>{if(e.target!==box)refresh()});
+box.addEventListener('focus',()=>box.select());
+function legacyCopy(){box.focus();box.select();try{return document.execCommand('copy')}catch(e){return false}}
+document.getElementById('copy').onclick=async()=>{
+  const b=document.getElementById('copy');refresh();
+  let ok=false;
+  try{await navigator.clipboard.writeText(box.value);ok=true}catch(e){ok=legacyCopy()}
+  if(ok){b.textContent='Copied ✓ paste it in chat'}
+  else{box.scrollIntoView({behavior:'smooth',block:'center'});box.focus();box.select();b.textContent='Selected below: press Ctrl+C'}
+  setTimeout(()=>b.textContent='Copy my picks',3000)};
+document.getElementById('reset').onclick=()=>{if(!confirm('Clear your ticks and comments?'))return;S={on:{},note:{},lead:{},add:'',overall:''};save();render();document.getElementById('add').value='';document.getElementById('overall').value='';refresh()};
+</script>
+</body>
+</html>

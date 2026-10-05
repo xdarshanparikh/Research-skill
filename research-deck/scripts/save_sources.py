@@ -40,7 +40,9 @@ for it in items:
 if pages:
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        b = p.chromium.launch()
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from chart_png import launch
+        b = launch(p)
         ctxp = b.new_context(user_agent=UA["User-Agent"], viewport={"width": 1280, "height": 1600})
         for it, path in pages:
             pg = ctxp.new_page()

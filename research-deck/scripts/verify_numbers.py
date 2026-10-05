@@ -39,13 +39,19 @@ def main():
         targets = [root / c["file"]] if c.get("file") else files
         num = norm(c["number"]); pat = re.compile(r"(?<![\d.])" + re.escape(num) + r"(?![\d])")
         hit = None
+        raw_pat = re.compile(r"(?<![\d.,])" + re.escape(c["number"]) + r"(?![\d])")
         for f in targets:
-            if f not in cache: cache[f] = norm(" ".join(text_of(f).split())) if f.exists() else ""
-            t = cache[f]
-            for m in pat.finditer(t):
+            if f not in cache:
+                raw = " ".join(text_of(f).split()) if f.exists() else ""
+                cache[f] = (norm(raw), raw)
+            # normalised text catches 72,697 = 72697; raw text catches numbers inside tables, where
+            # normalising would glue neighbouring columns together ("1 56 100" -> "156100")
+            for t, p_ in ((cache[f][0], pat), (cache[f][1], raw_pat)):
+              for m in p_.finditer(t):
                 win = t[max(0, m.start() - 120): m.end() + 120]
                 if not c.get("context") or c["context"].lower() in win.lower():
                     hit = (f.name, t[max(0, m.start() - 60): m.end() + 60].strip()); break
+              if hit: break
             if hit: break
         if hit:
             print(f"FOUND    {c['id']:6s} {c['number']:>12s}  in {hit[0]}: '...{hit[1]}...'")

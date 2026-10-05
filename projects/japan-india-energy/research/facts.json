@@ -1,0 +1,480 @@
+{
+ "title": "Japan–India Energy & Carbon",
+ "date": "5 Oct 2026",
+ "fx": "",
+ "story": "Japan has set a ¥10 trillion India investment target and a live carbon-credit channel (the JCM, rules adopted June 2026). India now pays a fixed ₹2,110/MMBtu for CBG and mandates 3–5% blending. Diverting Mumbai's wet waste from Kanjurmarg into CBG saves roughly 0.4–1.5 t CO₂e per tonne, a fit for JCM co-finance and credits.",
+ "themes": [
+  {
+   "id": "japan",
+   "name": "Japan's push into Indian energy",
+   "why": "Who is already investing, and how much"
+  },
+  {
+   "id": "policy",
+   "name": "India's targets, policy and subsidies",
+   "why": "The rules and money that make projects bankable"
+  },
+  {
+   "id": "carbon",
+   "name": "Carbon markets: CCTS and the JCM",
+   "why": "How a tonne saved becomes a credit, and who buys it"
+  },
+  {
+   "id": "landfill",
+   "name": "Mumbai landfill: carbon per tonne",
+   "why": "The size of the saving from diverting waste"
+  },
+  {
+   "id": "png",
+   "name": "Blending CBG into PNG",
+   "why": "What the blending mandate saves for a city gas company"
+  }
+ ],
+ "facts": [
+  {
+   "id": "F1",
+   "theme": "japan",
+   "number": "¥10 trillion",
+   "meaning": "Japan's new 10-year target for private investment into India, set at the Aug 2025 summit (the previous ¥5 trillion target was met)",
+   "source": "MOFA Japan-India Summit Aug 2025 summary",
+   "url": "https://japan.kantei.go.jp/103/diplomatic/202508/29india.html",
+   "year": "Aug 2025",
+   "fresh": "✓ latest summit target",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F2",
+   "theme": "japan",
+   "number": "¥60 billion",
+   "meaning": "JBIC-led loan to Power Finance Corporation for renewable and next-generation energy projects (JBIC share ¥36 bn)",
+   "source": "JBIC PFC loan Aug 2025",
+   "url": "https://www.jbic.go.jp/en/information/press/press-2025/press_00071.html",
+   "year": "Aug 2025",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F3",
+   "theme": "japan",
+   "number": "228,000 t/yr",
+   "meaning": "Green ammonia from ACME-IHI in Odisha that Japan's Contract-for-Difference scheme backs, exports from Sep 2030",
+   "source": "ACME-IHI green ammonia Japanese backing",
+   "url": "https://www.indianchemicalnews.com/ammonia/acme-ihi-secures-3-billion-japanese-subsidy-for-green-ammonia-in-india-30960",
+   "year": "2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F4",
+   "theme": "japan",
+   "number": "9 plants",
+   "meaning": "Suzuki's agreed dung-to-CBG plants with NDDB and Banas Dairy in Gujarat; third opened 26 Aug 2026",
+   "source": "Suzuki Banas biogas plant Aug 2026",
+   "url": "https://www.globalsuzuki.com/globalnews/2026/0826.html",
+   "year": "Aug 2026",
+   "fresh": "✓ newest opening",
+   "data": "timeline: Dec 2025, Jan 2026, Aug 2026",
+   "pick": true
+  },
+  {
+   "id": "F5",
+   "theme": "japan",
+   "number": "First Japanese CGD entrant",
+   "meaning": "Osaka Gas, Sumitomo and JOIN invest in AG&P's city gas business in India",
+   "source": "Osaka Gas Sumitomo AG&P India CGD",
+   "url": "https://offshoresource.com/business-wire/osaka-gas-sumitomo-and-join-to-invest-in-expanding-city-gas-distribution-business-in-india/",
+   "year": "Apr 2024",
+   "fresh": "✗ check for 2026 update",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F7",
+   "theme": "policy",
+   "number": "300.5 GW",
+   "meaning": "India's non-fossil power capacity on 31 Jul 2026: over 60% of the 500 GW target for 2030",
+   "source": "MNRE 300 GW non-fossil PIB 09-08-2026",
+   "url": "https://neetiniyaman.com/wp-content/uploads/2026/09/1.-PIB-Press-Release-09.08.2026-300-GW-Achieved.pdf",
+   "year": "Jul 2026",
+   "fresh": "✓ latest MNRE release",
+   "data": "solar 164.59, wind 58.14, hydro 57.24, bio 11.75, nuclear 8.78 GW",
+   "pick": true
+  },
+  {
+   "id": "F8",
+   "theme": "policy",
+   "number": "55.29 GW",
+   "meaning": "Record non-fossil capacity added in 2025-26 (44.6 GW solar, 6 GW wind)",
+   "source": "MNRE 300 GW non-fossil PIB 09-08-2026",
+   "url": "https://neetiniyaman.com/wp-content/uploads/2026/09/1.-PIB-Press-Release-09.08.2026-300-GW-Achieved.pdf",
+   "year": "FY26",
+   "fresh": "✓",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F9",
+   "theme": "policy",
+   "number": "47% by 2035",
+   "meaning": "India's updated NDC: cut emissions intensity of GDP 47% below 2005; 60% non-fossil capacity; net zero 2070",
+   "source": "India NDC 2035 targets",
+   "url": "https://climatefactchecks.org/india-sets-2035-climate-targets-eyes-60-clean-energy-capacity/",
+   "year": "Mar 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F10",
+   "theme": "policy",
+   "number": "₹23,731 crore",
+   "meaning": "GOBARdhan scheme for compressed biogas, FY27–FY36, approved 6 Aug 2026; aims ~10x CBG output",
+   "source": "PIB GOBARdhan cabinet note Aug 2026",
+   "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/aug/doc202686946301.pdf",
+   "year": "Aug 2026",
+   "fresh": "✓",
+   "data": "outlay by component available",
+   "pick": true
+  },
+  {
+   "id": "F11",
+   "theme": "policy",
+   "number": "₹2,110/MMBtu",
+   "meaning": "Administered CBG price, fixed for at least 10 years (was ₹1,478)",
+   "source": "Renewable Watch GOBARdhan launch Sep 2026",
+   "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/",
+   "year": "Sep 2026",
+   "fresh": "✓",
+   "data": "before/after",
+   "pick": true
+  },
+  {
+   "id": "F12",
+   "theme": "policy",
+   "number": "3% → 4% → 5%",
+   "meaning": "Mandatory CBG share of city-gas CNG and domestic PNG: FY27, FY28, FY29 onward",
+   "source": "Renewable Watch GOBARdhan launch Sep 2026",
+   "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/",
+   "year": "Sep 2026",
+   "fresh": "✓ replaces the 2023 1%→5% path",
+   "data": "series FY27-FY29",
+   "pick": true
+  },
+  {
+   "id": "F13",
+   "theme": "policy",
+   "number": "₹2 crore per TPD",
+   "meaning": "Capital assistance per tonne-per-day of CBG output capacity for greenfield plants",
+   "source": "Renewable Watch GOBARdhan launch Sep 2026",
+   "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/",
+   "year": "Sep 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F14",
+   "theme": "policy",
+   "number": "200+ plants",
+   "meaning": "CBG plants commissioned in India so far",
+   "source": "Renewable Watch GOBARdhan launch Sep 2026",
+   "url": "https://renewablewatch.in/2026/09/08/waste-to-gas-government-launches-the-gobardhan-scheme-to-promote-cbg-offtake/",
+   "year": "Sep 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F15",
+   "theme": "carbon",
+   "number": "490 entities",
+   "meaning": "Industrial units with binding emission-intensity targets under India's carbon market (CCTS) in 7 sectors, from FY2025-26",
+   "source": "ICAP CCTS compliance seven sectors",
+   "url": "https://icapcarbonaction.com/en/news/compliance-obligations-under-indias-carbon-credit-trading-scheme-enter-force-seven-sectors",
+   "year": "Mar 2026",
+   "fresh": "✓",
+   "data": "sectors list",
+   "pick": true
+  },
+  {
+   "id": "F16",
+   "theme": "carbon",
+   "number": "Oct 2026",
+   "meaning": "First trading of India's Carbon Credit Certificates expected",
+   "source": "Outlook Business CCTS trading Oct 2026",
+   "url": "https://www.outlookbusiness.com/amp/story/news/india-to-launch-first-carbon-trading-programme-by-october-2026",
+   "year": "2026",
+   "fresh": "✓ check after launch",
+   "data": true,
+   "pick": false
+  },
+  {
+   "id": "F17",
+   "theme": "carbon",
+   "number": "BM WA03.001",
+   "meaning": "CCTS offset methodology for landfill methane recovery, published 27 Mar 2025; CBG plants also have an approved method",
+   "source": "BEE BM WA03.001 landfill methane methodology",
+   "url": "https://beeindia.gov.in/sites/default/files/BM%20WA03.001.pdf",
+   "year": "Mar 2025",
+   "fresh": "✓ v1.0",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F18",
+   "theme": "carbon",
+   "number": "7 Aug 2025",
+   "meaning": "India and Japan signed the Joint Crediting Mechanism (JCM) under Paris Article 6.2",
+   "source": "JCM India-Japan official page",
+   "url": "https://www.jcm.go.jp/jc/in-about/",
+   "year": "Aug 2025",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F19",
+   "theme": "carbon",
+   "number": "8 Jun 2026",
+   "meaning": "JCM Rules of Implementation adopted: Joint Committee, approval, third-party verification, registries",
+   "source": "DD India JCM Rules of Implementation June 2026",
+   "url": "https://ddindia.co.in/2026/06/india-japan-adopt-implementation-rules-for-joint-crediting-mechanism-under-paris-agreement/",
+   "year": "Jun 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F20",
+   "theme": "carbon",
+   "number": "Up to 1/2",
+   "meaning": "Share of a project's initial investment Japan's MOE subsidy can cover; Japan takes a share of credits",
+   "source": "MOE Japan JCM Model Projects subsidy",
+   "url": "https://www.env.go.jp/en/press/press_02376.html",
+   "year": "Jul 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F21",
+   "theme": "carbon",
+   "number": "32 partners, 300+ projects",
+   "meaning": "JCM reach; India is a partner. Japan aims for ~100 Mt of credits by FY2030 and ~200 Mt by FY2040",
+   "source": "CarbonCredits JCM India Article 6",
+   "url": "https://carboncredits.com/japan-india-jcm-article-6-carbon-credits/",
+   "year": "Apr–Jul 2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F22",
+   "theme": "carbon",
+   "number": "28 Sep 2026",
+   "meaning": "India–Japan carbon market forum in Delhi; compressed biogas named a JCM focus area",
+   "source": "MOE Japan India Forum Sep 2026",
+   "url": "https://www.env.go.jp/en/press/press_02632.html",
+   "year": "Sep 2026",
+   "fresh": "✓ outcomes not yet published",
+   "data": false,
+   "pick": false
+  },
+  {
+   "id": "F23",
+   "theme": "landfill",
+   "number": "3,300 kg CH₄/hr",
+   "meaning": "Methane measured from Kanjurmarg landfill by satellite (3 Apr 2026); one of the world's largest waste-site plumes",
+   "source": "Carbon Mapper Mumbai waste sites",
+   "url": "https://carbonmapper.org/articles/mumbai-waste-sites",
+   "year": "Apr 2026",
+   "fresh": "✓",
+   "data": "2025: 1,736 kg/h; 2026: 3,300 kg/h",
+   "pick": true
+  },
+  {
+   "id": "F24",
+   "theme": "landfill",
+   "number": "~0.81 Mt CO₂e/yr",
+   "meaning": "Kanjurmarg's methane as CO₂e if the Apr 2026 rate held all year (derived: × 8,760 h × GWP 28)",
+   "source": "Carbon Mapper Mumbai waste sites",
+   "url": "https://carbonmapper.org/articles/mumbai-waste-sites",
+   "year": "2026",
+   "fresh": "derived",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F25",
+   "theme": "landfill",
+   "number": "~0.38 t CO₂e per tonne",
+   "meaning": "Methane now leaking per tonne of Mumbai waste landfilled at Kanjurmarg (derived, indicative from one overpass)",
+   "source": "Carbon Mapper Mumbai waste sites",
+   "url": "https://carbonmapper.org/articles/mumbai-waste-sites",
+   "year": "2026",
+   "fresh": "derived",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F26",
+   "theme": "landfill",
+   "number": "1.1–1.4 t CO₂e per tonne",
+   "meaning": "Lifetime methane potential of a tonne of wet food waste in a landfill, IPCC default method (derived)",
+   "source": "IPCC 2006 Vol5 Ch3 solid waste disposal",
+   "url": "https://www.ipcc-nggip.iges.or.jp/public/2006gl/pdf/5_Volume5/V5_3_Ch3_SWDS.pdf",
+   "year": "IPCC 2006",
+   "fresh": "✓ standard defaults",
+   "data": "DOC 0.15, DOCf 0.5, F 0.5, MCF 0.8–1.0, GWP 28",
+   "pick": true
+  },
+  {
+   "id": "F27",
+   "theme": "landfill",
+   "number": "0.35 t CO₂e per tonne",
+   "meaning": "Real benchmark: Indore's 550 t/day waste-to-CBG plant claims ~70,000 t CO₂e/yr saved",
+   "source": "Energetica EverEnviro Indore CBG benchmark",
+   "url": "https://www.energetica-india.net/news/everenviro-sets-indias-benchmark-with-first-large-scale-cbg-plant-from-municipal-solid-waste-in-indore",
+   "year": "2025",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F28",
+   "theme": "landfill",
+   "number": "6,500 t/day",
+   "meaning": "Waste Mumbai generates; ~3,500 t is wet waste; ~90% goes to Kanjurmarg",
+   "source": "iamrenew Upcoming bio-CNG plant BMC MGL",
+   "url": "https://www.iamrenew.com/green-energy/upcoming-bio-cng-plant-by-bmc-mgl-to-process-1-3rd-of-mumbais-bio-waste/",
+   "year": "2025",
+   "fresh": "✗ BMC 2026 figure not found",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F29",
+   "theme": "landfill",
+   "number": "350 + 1,000 TPD",
+   "meaning": "MGL's two Mumbai CBG projects: Mankhurd 350 TPD (concession June 2026) and Deonar 1,000 TPD (36 t CBG/day)",
+   "source": "iamrenew MGL 350 TPD CBG Mankhurd",
+   "url": "https://www.iamrenew.com/green-energy/mgl-to-develop-350-tpd-compressed-biogas-cbg-plant-in-mumbai/",
+   "year": "2026",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F30",
+   "theme": "landfill",
+   "number": "61–191 kt CO₂e/yr",
+   "meaning": "Derived savings range for MGL's 350 TPD plant (observed vs IPCC per-tonne, plus fuel displaced)",
+   "source": "iamrenew MGL 350 TPD CBG Mankhurd",
+   "url": "https://www.iamrenew.com/green-energy/mgl-to-develop-350-tpd-compressed-biogas-cbg-plant-in-mumbai/",
+   "year": "2026",
+   "fresh": "derived",
+   "data": "",
+   "pick": false
+  },
+  {
+   "id": "F31",
+   "theme": "png",
+   "number": "1.92 kg CO₂ per SCM",
+   "meaning": "CO₂ from burning one standard cubic metre of natural gas; CBG is biogenic, so each SCM swapped saves this (derived from EPA)",
+   "source": "US EPA GHG Emission Factors Hub 2025",
+   "url": "https://www.epa.gov/system/files/documents/2025-01/ghg-emission-factors-hub-2025.pdf",
+   "year": "2025",
+   "fresh": "✓",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F32",
+   "theme": "png",
+   "number": "0.623 MMSCMD",
+   "meaning": "MGL domestic PNG sales in Q1 FY27 (56.67 million SCM in 91 days); CNG 3.50 MMSCMD",
+   "source": "Indian Chemical News MGL Q1 FY27",
+   "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336",
+   "year": "Q1 FY27",
+   "fresh": "✓ latest quarter",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F33",
+   "theme": "png",
+   "number": "~4,370 t CO₂/yr per 1%",
+   "meaning": "CO₂ saved for each 1% of CBG blended into MGL's domestic PNG (derived)",
+   "source": "Indian Chemical News MGL Q1 FY27",
+   "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336",
+   "year": "FY27",
+   "fresh": "derived",
+   "data": "",
+   "pick": true
+  },
+  {
+   "id": "F34",
+   "theme": "png",
+   "number": "13 → 22 kt CO₂/yr",
+   "meaning": "Saving from blending CBG into MGL domestic PNG at 3% (FY27) and 5% (FY29+); 87 → 144 kt on CNG + PNG (derived)",
+   "source": "Indian Chemical News MGL Q1 FY27",
+   "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336",
+   "year": "FY27–FY29",
+   "fresh": "derived",
+   "data": "series 3/4/5%",
+   "pick": true
+  },
+  {
+   "id": "F35",
+   "theme": "png",
+   "number": "~206,000 SCM/day",
+   "meaning": "CBG MGL would need at 5% of CNG + domestic PNG volumes (derived)",
+   "source": "Indian Chemical News MGL Q1 FY27",
+   "url": "https://www.indianchemicalnews.com/gas/mahanagar-gas-posts-sharp-q1-recovery-as-cng-domestic-png-volumes-drive-growth-31336",
+   "year": "FY29",
+   "fresh": "derived",
+   "data": "",
+   "pick": false
+  }
+ ],
+ "leads": [
+  {
+   "id": "L1",
+   "text": "\"Nepon India Alliance\": no public record found under this name",
+   "why": "Need the exact company name, website or partner list to profile it (NEPON Inc. in Atsugi, Japan, is a machinery maker; is that the one?)"
+  },
+  {
+   "id": "L2",
+   "text": "JCM methodology for CBG / landfill methane in India",
+   "why": "Credit volume depends on the approved JCM methodology and the Japan–India credit split"
+  },
+  {
+   "id": "L3",
+   "text": "Carbon credit prices: CCC first trades, JCM credit prices",
+   "why": "Turns the tonnes into rupees; prices not yet published"
+  },
+  {
+   "id": "L4",
+   "text": "Additionality at Kanjurmarg",
+   "why": "If the landfill already captures gas, credits for diverted waste may be lower"
+  },
+  {
+   "id": "L5",
+   "text": "Osaka Gas / Tokyo Gas / Sumitomo 2026 moves in Indian city gas and CBG",
+   "why": "Direct Japanese peers for an MGL partnership"
+  },
+  {
+   "id": "L6",
+   "text": "India's 5 MMT green hydrogen target status and Japanese offtakes",
+   "why": "Second Japan–India energy theme beyond biogas"
+  },
+  {
+   "id": "L7",
+   "text": "MNRE–METI clean hydrogen and ammonia Joint Declaration (29 Aug 2025)",
+   "why": "Official PDF couldn't be read here; confirm the text before using"
+  }
+ ]
+}
