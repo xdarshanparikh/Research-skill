@@ -26,7 +26,7 @@ def box(sh):
     return (sh.left or 0, sh.top or 0, (sh.left or 0) + (sh.width or 0), (sh.top or 0) + (sh.height or 0))
 
 
-def overlap(a, b, tol=Emu(20000)):
+def overlap(a, b, tol=Emu(45720)):  # 0.05 in: headings sit just above their charts by design
     return a[0] + tol < b[2] and b[0] + tol < a[2] and a[1] + tol < b[3] and b[1] + tol < a[3]
 
 

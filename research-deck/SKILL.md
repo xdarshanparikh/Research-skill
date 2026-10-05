@@ -1,17 +1,18 @@
 ---
 name: research-deck
-description: Research a topic with the latest authentic data, analyse it, design the right charts, and cite every source, then build a PowerPoint (.pptx) deck from it. Covers the whole evidence chain - newest-edition research, saving every source as a file, checking each number against the saved text, a Fact Sheet so the user picks the facts, chart choice by the data's job (sankey, waterfall, bubbles, slope, dumbbell, treemap, line), colour-blind-safe palettes, one standard source footer per slide, and a pre-flight deck check. Use this whenever someone asks for a data-backed or research-based presentation, deck, slides, PPTX, briefing, market overview, industry analysis or report deck, or asks to "research X and make slides", "turn this data into charts for a deck", or "add sources to my slides". Brand-neutral: works with any template.
+description: Research a topic with the latest authentic data, analyse it, design the right charts, and cite every source, then build a PowerPoint (.pptx) deck from it. Covers the whole evidence chain - newest-edition research, saving every source as a file, checking each number against the saved text, a Fact Sheet so the user picks the facts, chart choice by the data's job (sankey, waterfall, bubbles, slope, dumbbell, treemap, line), colour-blind-safe palettes, one standard source footer per slide, and a pre-flight deck check. Use this whenever someone asks for a data-backed or research-based presentation, deck, slides, PPTX, briefing, market overview, industry analysis or report deck, or asks to "research X and make slides", "turn this data into charts for a deck", or "add sources to my slides". Builds slides in the MGL (Mahanagar Gas) template look by default; another template can be swapped in.
 ---
 
 # Research Deck
 
-Make decks whose every number can be traced to a saved source, with charts that show what a bar chart can't. This skill covers **research, analysis, chart design and sources**. It does not set a visual identity: use the user's PowerPoint template if they have one, otherwise the plain 16:9 layout in `scripts/pptx_helpers.py`. For general PPTX mechanics (editing an existing deck, layouts, speaker notes), also use the `pptx` skill if it's available.
+Make decks whose every number can be traced to a saved source, with charts that show what a bar chart can't. This skill covers **research, analysis, chart design and sources**. **Every deck uses the MGL template look** (`template/mgl-template.pptx` via `scripts/mgl_kit.py`): a green takeaway title, a grey subtitle, stat cards with icon circles, native charts in the template colours, tinted scorecards, a "Key takeaway" bar and a sources line. If the user gives a different template, use it with `scripts/pptx_helpers.py` instead. For general PPTX mechanics (editing an existing deck, layouts, speaker notes), also use the `pptx` skill if it's available.
 
 Read these before you start:
 - `references/research.md`: how to search, which sources come first, saving and verifying.
 - `references/analysis.md`: data integrity, derived numbers, the Fact Sheet and building the storyline.
 - `references/chart-gallery.md`: picking a chart for the data's job, chart rules, palettes, `charts.py`.
 - `references/sources.md`: footers, speaker notes, `Sources.md` and the closing sources slide.
+- `references/template-design.md`: the MGL slide anatomy, components, colours and composition patterns. Look at `assets/template-preview.jpg`.
 
 ## Quality bar
 
@@ -38,7 +39,7 @@ Read these before you start:
 ## Workflow
 
 ### 1. Scope
-Confirm the topic, the audience, the deck length, the currency and units, and any template (`.pptx` or `.potx`). Set up a project folder:
+Confirm the topic, the audience, the deck length, and the currency and units. The look is the MGL template unless the user supplies another one. Set up a project folder:
 ```
 <project>/
 ├── research/            facts.json, Fact Sheet.html, claims.json
@@ -79,21 +80,39 @@ For each chart, write a spec in `charts/` and render it:
 python "<skill>/scripts/charts.py" charts/imports.json charts/imports.png    # or .svg
 ```
 - Size the canvas at about **140 px per inch** of the space it fills on the slide. A full-width 16:9 chart area of 12.1 × 4.9 in is about `"w": 1700, "h": 690`. Font sizes in the spec are in those px.
-- Use `"theme": "light"` or `"dark"` to match the slide background. If the template has brand colours, pass `"palette"` and validate it first:
+- Use `"theme": "mgl"` so image charts match the template's colours and fonts (`"light"` and `"dark"` are neutral). For a different palette, pass `"palette"` and validate it first:
   ```bash
   node "<skill>/scripts/validate_palette.js" "#hex,#hex,#hex" --mode light --surface "#ffffff"
   ```
-- Simple bars, columns, lines and pies can also be native PowerPoint charts (python-pptx `add_chart`), which the user can edit later. Use the same palette order, direct labels and no gridlines.
+- Make column, bar, stacked, line and doughnut charts **native** with `mgl_kit` (`column_chart`, `line_chart`, `doughnut_chart`), so the user can edit them in PowerPoint. Use `charts.py` images only for chart types PowerPoint lacks (sankey, waterfall with an upside bar, slope, dumbbell, treemap, bubbles).
 - Look at each PNG once. Fix clipped or overlapping labels by shortening labels, changing `fs`, or resizing the canvas.
 
-### 6. Build the deck
-Use `scripts/pptx_helpers.py` (python-pptx). It gives you `add_chart_slide(prs, title, png, source, subtitle, notes)`, `add_source` and `add_notes`, so every slide gets the same footer box named `Source`. With a user template, open it with `Presentation("template.pptx")` and pick its blank or title-only layout. Put the full source links and any derivation notes in each slide's **speaker notes**. End with a **Sources** slide that lists every publisher, document and year, and give a short link to `Sources.md` if the deck is shared.
+### 6. Build the deck (MGL template)
+Write a small build script with `scripts/mgl_kit.py` (copy patterns from `examples/build_example_deck.py`):
+```python
+import sys; sys.path.insert(0, "<skill>/scripts")
+from mgl_kit import Deck, C
+d = Deck()                                         # template/mgl-template.pptx
+d.title_slide("Title", "Subtitle", "25th Sep 2026")
+s = d.content_slide("Takeaway title, one line", "What is measured, unit, period")
+d.heading(s, 0.9, 1.42, 7.5, "Chart heading, unit"); d.column_chart(s, 0.81, 1.67, 7.57, 2.2, cats, {"Series": vals})
+d.stat_card(s, 8.71, 1.42, 3.72, 1.0, "+53%", "what the number means", icon="chart-up", tone="green")
+d.takeaway(s, "One or two sentences: the so-what.")
+d.sources(s, "Sources: Publisher, Document, Year; ...")
+d.notes(s, "Full citations with URLs, and derivations.")
+d.closing_slide(); d.save("<Deck name>.pptx")
+```
+- One message per slide. Every content slide gets a takeaway title, a subtitle, at least one visual (chart, cards or table), a **Key takeaway** bar and a **sources** line. Speaker notes hold the full links and derivations.
+- Vary the composition from slide to slide using the patterns in `references/template-design.md` (outlook, market snapshot, segments, flow, scenarios, plan response). Don't repeat one layout across the deck.
+- Use colour with meaning: red for risk or the pain year, green for positive or recovery, amber for watch or forecast, grey for history or context. Keep data labels on.
+- Pick icons from `template/icons/` (the list is in the design reference).
+- End with a **Sources** slide if the deck is shared outside, then `closing_slide()`.
 
 ### 7. Check, then hand over
 ```bash
 python "<skill>/scripts/check_deck.py" "<Deck name>.pptx" --skip 1,<closing slides>
 ```
-This flags missing or moved footers, long footers, old data years, shapes off the slide and overlaps. Fix everything until it says "all clear". If an old year really is the latest that exists, write "(latest available)" in the footer or `data-checked: YYYY` in the notes, and tell the user. If LibreOffice is available, render once to check by eye (`soffice --headless --convert-to pdf`).
+This flags missing or moved footers, long footers, old data years, shapes off the slide and overlaps. Fix everything until it says "all clear". If an old year really is the latest that exists, write "(latest available)" in the footer or `data-checked: YYYY` in the notes, and tell the user. Then render and look at every slide (needs LibreOffice Impress): `soffice --headless --convert-to pdf deck.pptx` and `pdftoppm -jpeg -r 110 deck.pdf slide`. Check for text overflowing its cards, labels colliding, and titles longer than one line. Aptos may render a little wider or narrower in LibreOffice than in PowerPoint, so leave slack in tight boxes.
 
 Hand over the `.pptx`, `research/Sources.md` and the `charts/` folder. Then list in chat anything still open: derived numbers, series that have stopped, and facts you dropped because you couldn't verify them.
 

@@ -3,7 +3,7 @@ Turn it into a PNG for PowerPoint with chart_png.py (or pass a .png output path 
 
 usage: python charts.py <spec.json> [out.svg | out.png]
 spec = {"type": "sankey"|"waterfall"|"bubble"|"scatter"|"slope"|"dumbbell"|"treemap"|"line",
-        "theme": "light"|"dark",            # background the chart sits on (picks ink + palette)
+        "theme": "light"|"dark"|"mgl",      # background / template the chart sits on (picks ink + palette + font)
         "w": 1600, "h": 800,                 # canvas size in px (~140 px per inch of the PPTX placeholder)
         "palette": ["#hex", ...],            # optional: your own validated categorical order (last = grey/other)
         "font": "Arial", "cw": 0.55,         # optional: font family and its average char width / font size
@@ -21,14 +21,19 @@ Text width is estimated at cw x font size per character (good enough for layout;
 import json, math, sys
 
 INK = {"light": {"t": "#1a1a1a", "t2": "#555555", "axis": "#1a1a1a", "accent": "#2a78d6", "edge": "#ffffff", "on_dark": "#ffffff", "on_light": "#1a1a1a"},
-       "dark":  {"t": "#ffffff", "t2": "#c9ccd1", "axis": "#ffffff", "accent": "#5b9be3", "edge": "#1f2328", "on_dark": "#ffffff", "on_light": "#1a1a1a"}}
+       "dark":  {"t": "#ffffff", "t2": "#c9ccd1", "axis": "#ffffff", "accent": "#5b9be3", "edge": "#1f2328", "on_dark": "#ffffff", "on_light": "#1a1a1a"},
+       # MGL template (template/mgl-template.pptx): black labels, 404040 secondary text, 888888 axis, blue accent
+       "mgl":   {"t": "#000000", "t2": "#404040", "axis": "#888888", "accent": "#0067B2", "edge": "#ffffff", "on_dark": "#ffffff", "on_light": "#000000"}}
 # fixed categorical order per background; last slot = "other / context" grey.
 # Both pass validate_palette.js (CVD separation + normal-vision floor) on #ffffff / #1f2328.
 PALETTE = {"light": ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#b8b8b8"],
-           "dark":  ["#3b82d6", "#d95926", "#199e70", "#c28400", "#cf5f8c", "#6b6f76"]}
+           "dark":  ["#3b82d6", "#d95926", "#199e70", "#c28400", "#cf5f8c", "#6b6f76"],
+           # template series order: blue, amber, green, red, light blue, grey (CVD >= 7 with direct labels)
+           "mgl":   ["#0067B2", "#FCB000", "#51AD30", "#B9382A", "#7FB2D9", "#888888"]}
+FONTS = {"mgl": "Aptos, Calibri, Carlito, Arial, sans-serif"}  # per theme; the first installed font wins when rendering
 ALIAS = {"white": "light", "char": "dark", "charcoal": "dark"}
 CW = 0.55  # average char width / font size (Arial); set per spec with "cw"
-FONT = "Arial"
+FONT = "Arial, Helvetica, sans-serif"
 
 
 def theme(sp):
@@ -368,6 +373,8 @@ TYPES = dict(sankey=sankey, waterfall=waterfall, bubble=bubble, scatter=scatter,
 def render(sp):
     global CW
     CW = sp.get("cw", 0.55)
+    th = ALIAS.get(sp.get("theme", "light"), sp.get("theme", "light"))
+    if "font" not in sp and th in FONTS: sp = dict(sp, font=FONTS[th])
     return TYPES[sp["type"]](sp)
 
 

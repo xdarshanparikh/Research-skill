@@ -2,3 +2,4 @@ python-pptx
 playwright
 pypdf
 pillow
+lxml
